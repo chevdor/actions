@@ -1,14 +1,14 @@
 name: GPG Sign check
 
 on:
-  pull_request:
-    branches:
-      - master
+  # pull_request:
+  #   branches:
+  #     - master
   push:
     branches:
       - "*"
-    tags:
-      - "v*"
+    # tags:
+    #   - "v*"
   workflow_dispatch:
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
           date > data.txt
 
       - name: Sign data
-        uses: ./gpg-sign/action
+        uses: ./gpg-sign
         with:
           key: ${{ secrets.GPG_PRIVATE_KEY }}
           file: data.txt

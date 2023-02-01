@@ -1,0 +1,53 @@
+name: "GPG Sign"
+description: "Use GPG to sign some artifacts"
+author: chevdor
+branding:
+  icon: "umbrella"
+  color: "blue"
+
+inputs:
+  key:
+    description: >
+      GPG Private Key
+    required: true
+
+  file:
+    description: >
+      The file to sign
+    required: true
+
+# outputs:
+  # json:
+  #   description: >
+  #     Bla
+    # value: ${{ steps.build.outputs.json }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Tooling
+      shell: bash
+      run: |
+        gpg --version
+
+    - name: GPG Sign Artifact
+      id: gpg_sign
+      shell: bash
+      run: |
+        # import private key
+        echo "Import private key" >> $GITHUB_OUTPUT
+
+        # show list of keys
+        echo "Show keys" >> $GITHUB_OUTPUT
+
+        # sign artifact
+        echo "Sign artifact" >> $GITHUB_OUTPUT
+
+        # show signature
+        echo "Show signature" >> $GITHUB_OUTPUT
+
+        echo ::group::Debug
+        echo "foo=bar" >> $GITHUB_ENV
+        echo ::endgroup
+
+        # return signature file

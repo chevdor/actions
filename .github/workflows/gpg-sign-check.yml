@@ -1,0 +1,33 @@
+name: GPG Sign check
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - "*"
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Generate data to sign
+        run: |
+          date > data.txt
+
+      - name: Sign data
+        uses: ./gpg-sign/action
+        with:
+          key: ${{ secrets.GPG_PRIVATE_KEY }}
+          file: data.txt
+
+      - name: Check
+        run: |
+          ls -al
+          echo ${{ secrets.GPG_PUBLIC_KEY }} | gpg --import
+          gpg -k

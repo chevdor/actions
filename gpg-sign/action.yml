@@ -34,6 +34,7 @@ runs:
       id: gpg_sign
       shell: bash
       run: |
+
         # import private key
         echo "Import private key" >> $GITHUB_OUTPUT
 
@@ -46,8 +47,8 @@ runs:
         # show signature
         echo "Show signature" >> $GITHUB_OUTPUT
 
-        echo ::group::Debug
-        echo "foo=bar" >> $GITHUB_ENV
-        echo ::endgroup
+        # echo ::group::Debug
+        # echo "foo=bar" >> $GITHUB_ENV
+        # echo ::endgroup
 
         # return signature file

@@ -35,17 +35,19 @@ runs:
       shell: bash
       run: |
 
+        echo "TEST"
+
         # import private key
-        echo "Import private key" >> $GITHUB_OUTPUT
+        # echo "Import private key" >> $GITHUB_OUTPUT
 
         # show list of keys
-        echo "Show keys" >> $GITHUB_OUTPUT
+        # echo "Show keys" >> $GITHUB_OUTPUT
 
         # sign artifact
-        echo "Sign artifact" >> $GITHUB_OUTPUT
+        # echo "Sign artifact" >> $GITHUB_OUTPUT
 
         # show signature
-        echo "Show signature" >> $GITHUB_OUTPUT
+        # echo "Show signature" >> $GITHUB_OUTPUT
 
         # echo ::group::Debug
         # echo "foo=bar" >> $GITHUB_ENV

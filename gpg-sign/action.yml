@@ -38,19 +38,19 @@ runs:
         echo "TEST"
 
         # import private key
-        # echo "Import private key" >> $GITHUB_OUTPUT
+        echo "Import private key"
 
         # show list of keys
-        # echo "Show keys" >> $GITHUB_OUTPUT
+        echo "Show keys"
 
         # sign artifact
-        # echo "Sign artifact" >> $GITHUB_OUTPUT
+        echo "Sign artifact"
 
         # show signature
-        # echo "Show signature" >> $GITHUB_OUTPUT
+        echo "Show signature"
 
-        # echo ::group::Debug
-        # echo "foo=bar" >> $GITHUB_ENV
-        # echo ::endgroup
+        echo "::group::Debug"
+        echo "foo=bar" >> $GITHUB_ENV
+        echo "::endgroup::"
 
         # return signature file

@@ -33,13 +33,15 @@ runs:
     - name: GPG Sign Artifact
       id: gpg_sign
       shell: bash
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       run: |
 
         echo "TEST"
 
         # import private key
         echo "Import private key"
-        echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import
+        echo "$GPG_PRIVATE_KEY" | gpg --import
 
         # show list of keys
         echo "Show keys"

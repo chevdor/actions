@@ -35,25 +35,31 @@ runs:
       shell: bash
       env:
         GPG_PRIVATE_KEY: ${{ inputs.key }}
+        FILE: ${{ inputs.file }}
       run: |
 
         echo "TEST"
 
         # import private key
+        echo "::group::Import Key"
         echo "Import private key"
         echo "$GPG_PRIVATE_KEY" | gpg --import
 
         # show list of keys
         echo "Show keys"
+        gpg -K
+        echo "::endgroup::"
 
         # sign artifact
+        echo "::group::Signature"
         echo "Sign artifact"
+        gpg --clearsign "${FILE}"
 
         # show signature
         echo "Show signature"
-
-        echo "::group::Debug"
-        echo "foo=bar" >> $GITHUB_ENV
+        sig_file="${FILE}.asc"
+        echo "Signature file: ${sig_file}"
+        cat "${sig_file}"
         echo "::endgroup::"
 
         # return signature file

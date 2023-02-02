@@ -59,6 +59,12 @@ jobs:
           echo "good: $good"
           echo "bad: $bad"
 
+          if (( $good == 0 && $bad == 1 )); then
+            exit 0
+          else
+            exit 1
+          fi
+  
       # - name: Check
       #   env:
       #     GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}

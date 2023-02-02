@@ -44,6 +44,7 @@ runs:
         SIG_FILE: ${{ inputs.sig_file }}
         FILE: ${{ inputs.file }}
       run: |
+        set +e
 
         # import public key
         echo "::group::Import Key"

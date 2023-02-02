@@ -44,6 +44,7 @@ jobs:
 
       - name: Verify bad signature
         id: gpg_verif_bad
+        continue-on-error: true
         uses: ./gpg-verify
         with:
           key: ${{ secrets.GPG_PUBLIC_KEY }}

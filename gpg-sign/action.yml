@@ -39,6 +39,7 @@ runs:
 
         # import private key
         echo "Import private key"
+        echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import
 
         # show list of keys
         echo "Show keys"

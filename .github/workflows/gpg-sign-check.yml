@@ -36,7 +36,7 @@ jobs:
           ls -al
 
           echo "Importing public key"
-          echo ${{ secrets.GPG_PUBLIC_KEY }} | gpg --import
+          # echo ${{ secrets.GPG_PUBLIC_KEY }} | gpg --import
 
           echo "Listing known keys"
           gpg -k

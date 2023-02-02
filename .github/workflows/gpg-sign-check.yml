@@ -47,7 +47,6 @@ jobs:
           gpg -k
 
           sig_file=${{ steps.gpg_sign.outputs.sig_file }}'
-          signature=${{ steps.gpg_sign.outputs.signature }}'
 
           if gpg --verify "${sig_file}"; then
             echo "Signature OK"

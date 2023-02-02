@@ -28,7 +28,9 @@ runs:
     - name: Install Tooling
       shell: bash
       run: |
+        echo "::group::GPG version"
         gpg --version
+        echo "::endgroup::"
 
     - name: GPG Sign Artifact
       id: gpg_sign
@@ -39,8 +41,7 @@ runs:
       run: |
 
         # import private key
-        echo "::group::Import Key"
-        echo "Import private key"
+        echo "::group::Import private key"
         echo "$GPG_PRIVATE_KEY" | gpg --import
 
         # show list of keys
@@ -64,5 +65,3 @@ runs:
         echo "sig_file=${sig_file}" >> $GITHUB_OUTPUT
 
         echo "::endgroup::"
-
-        # return signature file

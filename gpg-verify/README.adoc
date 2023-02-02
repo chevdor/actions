@@ -3,3 +3,9 @@
 == Introduction
 
 A Github Action helping with GPG signature verififcation.
+
+== Example
+
+----
+include::./examples/gpg-verify.yml[]
+----

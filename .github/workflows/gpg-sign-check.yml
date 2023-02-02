@@ -19,24 +19,38 @@ jobs:
 
       - name: Check tooling
         run: |
+          echo "::group::Check tooling"
           gpg --version
+          echo "::endgroup::"
 
       - name: Generate data to sign
         run: |
           date > data.txt
 
       - name: Sign data
+        id: gpg_sign
         uses: ./gpg-sign
         with:
           key: ${{ secrets.GPG_PRIVATE_KEY }}
           file: data.txt
 
       - name: Check
+        env:
+          GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
         run: |
           ls -al
 
           echo "Importing public key"
-          # echo ${{ secrets.GPG_PUBLIC_KEY }} | gpg --import
+          echo "${GPG_PUBLIC_KEY}" | gpg --import
 
           echo "Listing known keys"
           gpg -k
+
+          sig_file=${{ steps.gpg_sign.outputs.sig_file }}'
+          signature=${{ steps.gpg_sign.outputs.signature }}'
+
+          if gpg --verify "${sig_file}"; then
+            echo "Signature OK"
+          else
+            echo "Signature FAILED"
+          fi

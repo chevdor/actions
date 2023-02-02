@@ -16,11 +16,16 @@ inputs:
       The file to sign
     required: true
 
-# outputs:
-  # json:
-  #   description: >
-  #     Bla
-    # value: ${{ steps.build.outputs.json }}
+outputs:
+  signature:
+    description: >
+      The detached signature, ascii armored
+    value: ${{ steps.gpg_sign.outputs.signature }}
+
+  sig_file:
+    description: >
+      The path of the signature file
+    value: ${{ steps.gpg_sign.outputs.sig_file }}
 
 runs:
   using: "composite"
@@ -38,8 +43,6 @@ runs:
         FILE: ${{ inputs.file }}
       run: |
 
-        echo "TEST"
-
         # import private key
         echo "::group::Import Key"
         echo "Import private key"
@@ -48,18 +51,24 @@ runs:
         # show list of keys
         echo "Show keys"
         gpg -K
+        gpg --armor --export
         echo "::endgroup::"
 
         # sign artifact
-        echo "::group::Signature"
+        echo "::group::Signature of ${FILE}"
         echo "Sign artifact"
-        gpg --clearsign "${FILE}"
+        gpg --detach-sig --armor "${FILE}"
 
         # show signature
-        echo "Show signature"
+        echo "GPG Signature"
         sig_file="${FILE}.asc"
         echo "Signature file: ${sig_file}"
-        cat "${sig_file}"
+        sig=$(cat "${sig_file}")
+        echo "${sig}"
+
+        echo "sig_file=${sig_file}" >> $GITHUB_OUTPUT
+        echo "signature=${sig}" >> $GITHUB_OUTPUT
+
         echo "::endgroup::"
 
         # return signature file

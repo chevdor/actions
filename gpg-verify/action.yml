@@ -25,7 +25,7 @@ outputs:
   result:
     description: >
       Whether the verification passes or not
-    value: ${{ steps.gpg_sign.outputs.sig_file }}
+    value: ${{ steps.gpg_verify.outputs.result }}
 
 runs:
   using: "composite"

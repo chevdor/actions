@@ -26,6 +26,7 @@ jobs:
       - name: Generate data to sign
         run: |
           date > data.txt
+          echon "foobar" > foobar.txt
 
       - name: Sign data
         id: gpg_sign
@@ -34,26 +35,49 @@ jobs:
           key: ${{ secrets.GPG_PRIVATE_KEY }}
           file: data.txt
 
-      - name: Check
-        env:
-          GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+      - name: Verify signature OK
+        id: gpg_verif_good
+        uses: ./gpg-verify
+        with:
+          key: ${{ secrets.GPG_PUBLIC_KEY }}
+          sig_file: data.txt.asc
+
+      - name: Verify bad signature
+        id: gpg_verif_bad
+        uses: ./gpg-verify
+        with:
+          key: ${{ secrets.GPG_PUBLIC_KEY }}
+          sig_file: data.txt.asc
+          file: foobar.txt
+
+      - name: Checks
         run: |
-          ls -al
+          good=${{ steps.gpg_verif_good.outputs.result }}
+          bad=${{ steps.gpg_verif_bad.outputs.result }}
 
-          echo "Importing public key"
-          echo "${GPG_PUBLIC_KEY}" | gpg --import
+          echo "good: $good"
+          echo "bad: $bad"
 
-          echo "Listing known keys"
-          gpg -k
+      # - name: Check
+      #   env:
+      #     GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
+      #   run: |
+      #     ls -al
 
-          sig_file=${{ steps.gpg_sign.outputs.sig_file }}
-          echo "Signature found in: ${sig_file}"
+      #     echo "Importing public key"
+      #     echo "${GPG_PUBLIC_KEY}" | gpg --import
 
-          gpg --verify "${sig_file}"
-          RESULT=$?
+      #     echo "Listing known keys"
+      #     gpg -k
 
-          if [ $RESULT -eq 0 ]; then
-            echo "Signature OK"
-          else
-            echo "Signature FAILED"
-          fi
+      #     sig_file=${{ steps.gpg_sign.outputs.sig_file }}
+      #     echo "Signature found in: ${sig_file}"
+
+      #     gpg --verify "${sig_file}"
+      #     RESULT=$?
+
+      #     if [ $RESULT -eq 0 ]; then
+      #       echo "Signature OK"
+      #     else
+      #       echo "Signature FAILED"
+      #     fi

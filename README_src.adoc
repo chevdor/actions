@@ -1,4 +1,4 @@
-= SRTOOL Github Action
+= Github Actions
 :toc: right
 
 // [cols="1,1"]
@@ -9,6 +9,11 @@
 // a| image::https://github.com/chevdor/actions/actions/workflows/polkadot.yml/badge.svg?branch=master[link="https://github.com/chevdor/actions/actions/workflows/polkadot.yml"]
 // |===
 
-include::gpg-sign/README.adoc[leveloffset=+1]
+== Actions
+
+include::gpg-sign/README.adoc[leveloffset=+2]
+include::gpg-verify/README.adoc[leveloffset=+2]
+
+include::doc/gpg.adoc[leveloffset=+1]
 
 include::CONTRIBUTING.adoc[]

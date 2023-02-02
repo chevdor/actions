@@ -1,0 +1,70 @@
+name: "GPG Sign"
+description: "Use GPG to sign some artifacts"
+author: chevdor
+branding:
+  icon: "umbrella"
+  color: "blue"
+
+inputs:
+  key:
+    description: >
+      GPG Public Key
+    required: true
+
+  sig_file:
+    description: >
+      The file containing the signature
+    required: true
+
+  file:
+    description: >
+      The file that was signeds
+    required: false
+
+outputs:
+  result:
+    description: >
+      Whether the verification passes or not
+    value: ${{ steps.gpg_sign.outputs.sig_file }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Tooling
+      shell: bash
+      run: |
+        gpg --version
+
+    - name: GPG Sign Artifact
+      id: gpg_verify
+      shell: bash
+      env:
+        GPG_PUBLIC_KEY: ${{ inputs.key }}
+        SIG_FILE: ${{ inputs.sig_file }}
+        FILE: ${{ inputs.file }}
+      run: |
+
+        # import public key
+        echo "::group::Import Key"
+        echo "Import public key"
+        echo "$GPG_PUBLIC_KEY" | gpg --import
+
+        # show list of keys
+        echo "Show keys"
+        gpg -k
+        gpg --armor --export
+        echo "::endgroup::"
+
+        # verify signature
+        echo "::group::Verify signature of ${FILE}"
+        if [ -z "$FILE" ]; then
+          gpg --verify "${SIG_FILE}"
+        else
+          gpg --verify "${SIG_FILE}" "${FILE}"
+        fi
+        res=$?
+
+        echo "result=${res}" >> $GITHUB_OUTPUT
+        echo "::endgroup::"
+
+        # return signature file

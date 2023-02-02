@@ -1,8 +1,20 @@
-# SRTOOL Github Action
+# Github Actions
+
+## Actions
 
 # gpg-sign
 
 ## Introduction
+
+A Github Action helping with GPG signature creation.
+
+# gpg-verify
+
+## Introduction
+
+A Github Action helping with GPG signature verififcation.
+
+# GPG cheat-sheet
 
 ## Create a key
 

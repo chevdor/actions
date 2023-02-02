@@ -67,6 +67,7 @@ runs:
         fi
         res=$?
 
+        echo "result: ${res}"
         echo "result=${res}" >> $GITHUB_OUTPUT
         echo "::endgroup::"
 

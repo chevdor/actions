@@ -34,7 +34,7 @@ runs:
       id: gpg_sign
       shell: bash
       env:
-        GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        GPG_PRIVATE_KEY: ${{ inputs.key }}
       run: |
 
         echo "TEST"

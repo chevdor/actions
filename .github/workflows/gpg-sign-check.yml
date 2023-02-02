@@ -46,7 +46,7 @@ jobs:
           echo "Listing known keys"
           gpg -k
 
-          sig_file=${{ steps.gpg_sign.outputs.sig_file }}'
+          sig_file=${{ steps.gpg_sign.outputs.sig_file }}
           echo "Signature found in: ${sig_file}"
 
           gpg --verify "${sig_file}"

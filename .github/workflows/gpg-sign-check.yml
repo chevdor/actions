@@ -26,7 +26,7 @@ jobs:
       - name: Generate data to sign
         run: |
           date > data.txt
-          echon "foobar" > foobar.txt
+          echo "foobar" > foobar.txt
 
       - name: Sign data
         id: gpg_sign

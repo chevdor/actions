@@ -47,8 +47,12 @@ jobs:
           gpg -k
 
           sig_file=${{ steps.gpg_sign.outputs.sig_file }}'
+          echo "Signature found in: ${sig_file}"
 
-          if gpg --verify "${sig_file}"; then
+          gpg --verify "${sig_file}"
+          RESULT=$?
+
+          if [ $RESULT -eq 0 ]; then
             echo "Signature OK"
           else
             echo "Signature FAILED"
